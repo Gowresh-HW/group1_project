@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Map server 
+    <arg name="map_file" default="$(find group1_project)/maps/manual.yaml"/>
+    <node pkg="map_server" name="map_server"  type="map_server" args="$(arg map_file)" /> -->
+
+    <!-- AMCL used for localization 
+    <include file="$(find rosbot_navigation)/launch/amcl_demo.launch" /> -->
+    
+    <!-- Calls navigation stack package -->
+    
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+        <rosparam file="$(find group1_project)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find group1_project)/params/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find group1_project)/params/local_costmap_common_params.yaml" command="load" />
+        <rosparam file="$(find group1_project)/params/global_costmap_common_params.yaml" command="load" />
+        <rosparam file="$(find group1_project)/params/trajectory_planner.yaml" command="load" />
+
+    </node>
+</launch>
