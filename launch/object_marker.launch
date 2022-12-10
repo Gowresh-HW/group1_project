@@ -1,0 +1,67 @@
+<launch>
+
+<group ns="object_1">
+  <node name="tf_marker" pkg="group1_project" type="tf.py" output="screen">
+    <param name="object" value="object_1" type="str"/>
+    <param name="topic" value="object_1/marker" type="str"/>
+    <param name="text" value="TOXIC" type="str"/>
+  </node>
+</group>
+
+<group ns="object_2">
+  <node name="tf_marker" pkg="group1_project" type="tf.py" output="screen">
+    <param name="object" value="object_2" type="str"/>
+    <param name="topic" value="object_2/marker" type="str"/>
+    <param name="text" value="DEAD WORKER" type="str"/>
+  </node>
+</group>
+
+<group ns="object_3">
+  <node name="tf_marker" pkg="group1_project" type="tf.py" output="screen">
+    <param name="object" value="object_3" type="str"/>
+    <param name="topic" value="object_3/marker" type="str"/>
+    <param name="text" value="BIOHAZARD" type="str"/>
+  </node>
+</group>
+
+<group ns="object_4">
+  <node name="tf_marker" pkg="group1_project" type="tf.py" output="screen">
+    <param name="object" value="object_4" type="str"/>
+    <param name="topic" value="object_4/marker" type="str"/>
+    <param name="text" value="DANGER" type="str"/>
+  </node>
+</group>
+
+<group ns="object_5">
+  <node name="tf_marker" pkg="group1_project" type="tf.py" output="screen">
+    <param name="object" value="object_5" type="str"/>
+    <param name="topic" value="object_5/marker" type="str"/>
+    <param name="text" value="ALIVE WORKER" type="str"/>
+  </node>
+</group>
+
+<group ns="object_6">
+  <node name="tf_marker" pkg="group1_project" type="tf.py" output="screen">
+    <param name="object" value="object_6" type="str"/>
+    <param name="topic" value="object_6/marker" type="str"/>
+    <param name="text" value="NO SMOKING" type="str"/>
+  </node>
+</group>
+
+<group ns="object_7">
+  <node name="tf_marker" pkg="group1_project" type="tf.py" output="screen">
+    <param name="object" value="object_7" type="str"/>
+    <param name="topic" value="object_7/marker" type="str"/>
+    <param name="text" value="RADIOACTIVE" type="str"/>
+  </node>
+</group>
+
+<group ns="object_8">
+  <node name="tf_marker" pkg="group1_project" type="tf.py" output="screen">
+    <param name="object" value="object_8" type="str"/>
+    <param name="topic" value="object_8/marker" type="str"/>
+    <param name="text" value="RISK OF FIRE" type="str"/>
+  </node>
+</group>
+
+</launch>

@@ -7,3 +7,20 @@ Joshua Hedwic Goldwin
 Deepangika Pillai  
 Gowresh Rajagopal  
 Mahim Trivedi 
+
+**Setup and Dependenceies**
+
+The package depends on the following packages:-
+
+explore_lite
+find_object2d
+move_base
+gmapping
+search_and_rescue Gazebo Simulation
+
+git clone this repositiory to the ROS workspace and do catkin_make
+
+**For Running**
+
+roslaunch group1_project complete.launch
+
