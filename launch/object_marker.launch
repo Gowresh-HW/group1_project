@@ -1,5 +1,5 @@
 <launch>
-
+<!-- Namespace given for each possible object with rosparams for object tf name, object text and marker topic-->
 <group ns="object_1">
   <node name="tf_marker" pkg="group1_project" type="tf.py" output="screen">
     <param name="object" value="object_1" type="str"/>

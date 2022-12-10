@@ -1,34 +1,32 @@
 #!/usr/bin/env python
-import rospy
-
-import math
-import tf2_ros
-import geometry_msgs.msg
-import turtlesim.srv
-from visualization_msgs.msg import Marker
-from visualization_msgs.msg import MarkerArray
+import rospy                                        #ROS Library for Python
+import tf2_ros                                      #ROS Library for Tf listening
+from visualization_msgs.msg import Marker           #ROS Library for Markers
+from visualization_msgs.msg import MarkerArray      #ROS Library for MarkerArrays
 
 
 if __name__ == '__main__':
-    rospy.init_node('tf_listener')
+    rospy.init_node('tf_listener')                  #Node name
 
-    tfBuffer = tf2_ros.Buffer()
-    listener = tf2_ros.TransformListener(tfBuffer)
+    tfBuffer = tf2_ros.Buffer()                     #Using Buffer function from tf2_ros
+    listener = tf2_ros.TransformListener(tfBuffer)  #Creating a transform listener instance
 
-    rate = rospy.Rate(10.0)
-    object_name = rospy.get_param('~object')
-    topic_name = rospy.get_param('~topic')
-    text_name = rospy.get_param('~text')
-    marker_pub = rospy.Publisher(topic_name, MarkerArray, queue_size=10)
-    first_run = True
-    marker = Marker()
-    markerArray = MarkerArray()
+    rate = rospy.Rate(10.0)                         #Defining rate of publishing 
+    object_name = rospy.get_param('~object')        #Getting object name from namespace param
+    topic_name = rospy.get_param('~topic')          #Getting topic name for object from namespace param
+    text_name = rospy.get_param('~text')            #Getting text name for object from namespace param
+    marker_pub = rospy.Publisher(topic_name, MarkerArray, queue_size=10)    #Publisher for publishing markerarray
+    first_run = True                                #Variable to enable multiple detections of same image
+    marker = Marker()                               #Marker initialisaion
+    markerArray = MarkerArray()                     #MarkerArray Initialisation
 
-    marker = Marker()
-    marker.header.frame_id = "map"
-    marker.type = marker.TEXT_VIEW_FACING
-    marker.action = marker.ADD
-    marker.scale.x = 0.7
+    
+    marker.header.frame_id = "map"                  #Publishing markers under map frame id
+    marker.type = marker.TEXT_VIEW_FACING           #Choosing text as the marker type
+    marker.action = marker.ADD                      #Add the chosen marker
+
+    #The following set of definitions are for defining the size and color of the marker text
+    marker.scale.x = 0.7                            
     marker.scale.y = 0.7
     marker.scale.z = 0.7
     marker.color.a = 1.0
@@ -36,22 +34,11 @@ if __name__ == '__main__':
     marker.color.g = 0.2
     marker.color.b = 0.5
 
-    #marker2 = Marker()
-    #marker2.header.frame_id = "map"
-    #marker2.type = marker.SPHERE
-    #marker2.action = marker.ADD
-    #marker2.scale.x = 1.0
-    #marker2.scale.y = 1.0
-    #marker2.scale.z = 1.0
-    #marker2.color.a = 0.5
-    #marker2.color.r = 1.0
-    #marker2.color.g = 0.38
-    #marker2.color.b = 0.27
-    # Set the pose of the marker
+
 
     while not rospy.is_shutdown():
         try:
-            trans = tfBuffer.lookup_transform('map', object_name, rospy.Time())
+            trans = tfBuffer.lookup_transform('map', object_name, rospy.Time()) #Listen for tf between map and object
             
 
         except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
@@ -60,8 +47,8 @@ if __name__ == '__main__':
             continue
 
 
-
-        marker.pose.position.x = trans.transform.translation.x
+        #The following definitions assign the coordinates of object's tf frame to the marker
+        marker.pose.position.x = trans.transform.translation.x 
         marker.pose.position.y = trans.transform.translation.y
         marker.pose.position.z = 0
         marker.pose.orientation.x = trans.transform.rotation.x
@@ -69,35 +56,29 @@ if __name__ == '__main__':
         marker.pose.orientation.z = trans.transform.rotation.z
         marker.pose.orientation.w = trans.transform.rotation.w
         marker.text = text_name
-        #marker_pub.publish(marker)
-
-        #marker2.pose.position.x = trans2.transform.translation.x
-        #marker2.pose.position.y = trans2.transform.translation.y
-        #marker2.pose.position.z = 0
-        #marker2.pose.orientation.x = trans2.transform.rotation.x
-        #marker2.pose.orientation.y = trans2.transform.rotation.y
-        #marker2.pose.orientation.z = trans2.transform.rotation.z
-        #marker2.pose.orientation.w = trans2.transform.rotation.w
-        if first_run:
-                last_x = trans.transform.translation.x
-                last_y = trans.transform.translation.y
+        
+        if first_run:           #Only works for the first time an object is detected
+                last_x = trans.transform.translation.x  #Storing the current coordinates
+                last_y = trans.transform.translation.y  #Storing the current coordinates
                 first_run = False
-                markerArray.markers.append(marker)
-        if (abs(last_x) - abs(trans.transform.translation.x)) > 2:
+                markerArray.markers.append(marker)      #Append the Marker to the MarkerArray
+
+        #The following condition is to check if the object is detected at a different location or the same location
+        if (abs(last_x) - abs(trans.transform.translation.x)) > 2:  #To enable multiple detection based on location
         
             #if (abs(last_y) - abs(trans.transform.translation.y)) > 0.5:
 
-            markerArray.markers.append(marker)
-            last_x = trans.transform.translation.x
-            #markerArray.markers.append(marker2)
+            markerArray.markers.append(marker)          #Append the new coordinate to the MarkerArray
+            last_x = trans.transform.translation.x      #If different location stre current coordinates
+            
         else:
             last_x = last_x
 
         ids = 0
-        for m in markerArray.markers:
+        for m in markerArray.markers:                   #For defining ids for MultipleArray
             m.id = ids
             ids += 1
-        marker_pub.publish(markerArray)
+        marker_pub.publish(markerArray)                 #Publish the Marker Array
         
         # print(trans)
 

@@ -1,17 +1,17 @@
 <launch>
-
+<!-- Search and Rescue Simulation-->
 <include file="$(find search_and_rescue)/launch/search_and_rescue.launch" />
-
+<!-- Gmapping for Task 2-->
 <include file="$(find group1_project)/launch/gmapping.launch" />
-
+<!-- Navigation with move_base Task 1-->
 <include file="$(find group1_project)/launch/nav.launch" />
-
+<!-- Object detection with find_object_2d Task 3-->
 <include file="$(find group1_project)/launch/object.launch" />
-
+<!-- Tf listener and Marker Publishing  Task 4-->
 <include file="$(find group1_project)/launch/object_marker.launch" />
-
+<!-- Frontier Exploration Task 2-->
 <include file="$(find explore_lite)/launch/explore.launch" />
-
+<!-- Rviz-->
 <node name="rviz" pkg="rviz" type="rviz"  required="true" output="screen"/>
 
 </launch>
