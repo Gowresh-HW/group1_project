@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+
+   <!--Map server 
+    <arg name="map_file" default="$(find group1_project)/maps/manual.yaml"/>
+    <node pkg="map_server" name="map_server"  type="map_server" args="$(arg map_file)" /> -->
+
+    <!-- AMCL used for localization 
+    <include file="$(find rosbot_navigation)/launch/amcl_demo.launch" /> -->
+    
+    <!-- Calls navigation stack package -->
+    
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find rosbot_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find group1_project)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find group1_project)/config/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find group1_project)/config/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find group1_project)/config/trajectory_planner.yaml" command="load" />
+    <rosparam file="$(find group1_project)/config/move_base.yaml" command="load" />
+    <remap from="cmd_vel" to="cmd_vel"/>
+    <remap from="odom" to="odom"/>
+    <remap from="scan" to="/scan"/>
+    <!--<param name="move_base/DWAPlannerROS/yaw_goal_tolerance" value="1.0"/>
+    <param name="move_base/DWAPlannerROS/xy_goal_tolerance" value="1.0"/> -->
+
+    </node>
+</launch>
