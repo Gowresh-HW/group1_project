@@ -1,0 +1,17 @@
+<launch>
+
+<include file="$(find search_and_rescue)/launch/search_and_rescue.launch" />
+
+<include file="$(find group1_project)/launch/gmapping.launch" />
+
+<include file="$(find group1_project)/launch/nav.launch" />
+
+<include file="$(find group1_project)/launch/object.launch" />
+
+<include file="$(find group1_project)/launch/object_marker.launch" />
+
+<include file="$(find explore_lite)/launch/explore.launch" />
+
+<node name="rviz" pkg="rviz" type="rviz"  required="true" output="screen"/>
+
+</launch>
