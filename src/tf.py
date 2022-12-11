@@ -1,4 +1,11 @@
 #!/usr/bin/env python
+#######################################################################################
+#The following code is based on tutorials from wiki.ros.org for 
+#   1) tf tutorials in Python 
+#   2) marker visualization tutorials in Python
+#######################################################################################
+
+
 import rospy                                        #ROS Library for Python
 import tf2_ros                                      #ROS Library for Tf listening
 from visualization_msgs.msg import Marker           #ROS Library for Markers
